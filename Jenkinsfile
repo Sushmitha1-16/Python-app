@@ -1,7 +1,7 @@
  pipeline {
     agent any
     environment {
-        IMAGE_NAME = 'santhu123456/pythonapp'
+        IMAGE_NAME = 'santhu123456/Python-app'
         TAG = 'latest'
     }
     stages {
