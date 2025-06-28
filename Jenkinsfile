@@ -1,48 +1,36 @@
-pipeline {
+ pipeline {
     agent any
-
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')  // <-- your actual Jenkins credential ID
         IMAGE_NAME = 'santhu123456/pythonapp'
+        TAG = '1'
     }
-
     stages {
-        stage('Clone Repo') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/betawins/Python-app.git'
+                git url: 'https://github.com/sripriya7-ande/Python-app.git', branch: 'main'
             }
         }
-
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
+                sh 'docker build -t $IMAGE_NAME:$TAG .'
             }
         }
-
         stage('Login to DockerHub') {
             steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                }
             }
         }
-
-        stage('Push to DockerHub') {
+        stage('Push Docker Image') {
             steps {
-                sh 'docker push $IMAGE_NAME:$BUILD_NUMBER'
+                sh 'docker push $IMAGE_NAME:$TAG'
             }
         }
     }
-
     post {
         always {
             sh 'docker logout'
-        }
-
-        success {
-            slackSend message: "✅ Docker Image pushed successfully: `${env.JOB_NAME}` #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-        }
-
-        failure {
-            slackSend message: "❌ Docker Image push failed: `${env.JOB_NAME}` #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
         }
     }
 }
