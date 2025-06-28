@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'santhu123456/pythonapp'
-        TAG = '1'
+        TAG = 'latest'
     }
 
     stages {
