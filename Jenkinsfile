@@ -1,9 +1,10 @@
  pipeline {
     agent any
-    environment {
-        IMAGE_NAME = 'santhu123456/Python-app'
-        TAG = 'latest'
-    }
+environment {
+    IMAGE_NAME = 'santhu123456/python-app'
+    TAG = 'latest'
+}
+
     stages {
         stage('Checkout') {
             steps {
