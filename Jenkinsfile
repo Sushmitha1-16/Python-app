@@ -7,7 +7,7 @@
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/sripriya7-ande/Python-app.git', branch: 'main'
+                git url: 'https://github.com/Sushmitha1-16/Python-app.git', branch: 'main'
             }
         }
         stage('Build Docker Image') {
