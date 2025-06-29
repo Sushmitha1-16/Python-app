@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'santhu123456/pythonapp'
-        TAG = 'latest'
+        TAG = '1'
     }
 
     stages {
@@ -21,7 +21,7 @@ pipeline {
 
         stage('Login to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
                 }
             }
@@ -40,3 +40,8 @@ pipeline {
         }
     }
 }
+Save and Build
+Click Save
+Click Build Now
+
+
