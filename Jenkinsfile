@@ -40,8 +40,3 @@ pipeline {
         }
     }
 }
-Save and Build
-Click Save
-Click Build Now
-
-
